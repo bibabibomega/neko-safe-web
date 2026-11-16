@@ -71,17 +71,14 @@ const isHere = (href: string) => (href === '/' || href === '/en/' ? here === hre
     <div class="topbar">
       <div class="wrap">
         <span class="hide-m">{vi ? 'Giao tận nơi toàn quốc' : 'Delivery nationwide'}</span>
-        <span>Hotline: {SITE.phones.map((p, i) => <>{i > 0 && ' / '}<a href={`tel:${p.tel}`}>{p.display}</a></>)}</span>
+        <span class="tb-right">Hotline: {SITE.phones.map((p, i) => <>{i > 0 && ' / '}<a href={`tel:${p.tel}`}>{p.display}</a></>)}<a class="lang" href={switchHref} hreflang={HTML_LANG[other]} lang={HTML_LANG[other]}>🌐 {t.otherLang}</a></span>
       </div>
     </div>
     <header class="site">
       <div class="wrap">
         <a class="brand" href={pathFor(locale, 'home')}><img src="/favicon.svg" alt="" width="34" height="34" /><span>{SITE.name}</span></a>
         <nav class="main" aria-label="Main">
-          {nav.map(([href, label]) => <a href={href} aria-current={isHere(href) ? 'page' : undefined}>{label}</a>)}
-          {vi && <a class="nav-order" href={VI_PAGES.order} aria-current={isHere(VI_PAGES.order) ? 'page' : undefined}>Đặt hàng ngay</a>}
-          <a href={switchHref} hreflang={HTML_LANG[other]} lang={HTML_LANG[other]}>{t.otherLang}</a>
-        </nav>
+          {nav.map(([href, label]) => <a href={href} aria-current={isHere(href) ? 'page' : undefined}>{label}</a>)}        </nav>
         <a class="call-btn" href={`tel:${p1.tel}`}>☎ {p1.display}</a>
       </div>
     </header>
