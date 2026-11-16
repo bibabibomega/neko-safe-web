@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import CompareTable from '../../components/CompareTable.astro';
+import { ARTICLES } from '../../data/articles';
+import { SITE } from '../../data/site';
+
+export function getStaticPaths() {
+  return ARTICLES.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const path = `/tin-tuc/${a.slug}/`;
+const abs = (x: string) => new URL(x, SITE.url).href;
+const others = ARTICLES.filter((x) => x.slug !== a.slug).slice(0, 3);
+const ld = [{
+  '@context': 'https://schema.org', '@type': 'Article', headline: a.title, description: a.description,
+  datePublished: a.date, dateModified: a.date, inLanguage: 'vi', mainEntityOfPage: abs(path),
+  image: abs(SITE.ogImage), author: { '@type': 'Organization', name: SITE.name }, publisher: { '@type': 'Organization', name: SITE.name },
+}];
+---
+<Base locale="vi" path={path} title={a.title} description={a.description} schema={ld} type="article">
+  <div class="wrap crumb"><a href="/">Trang chủ</a> › <a href="/tin-tuc/">Tin tức</a></div>
+  <section style="padding-top:12px"><div class="wrap">
+    <article class="prose">
+      <span class="chip">{a.tag}</span>
+      <h1 style="margin-top:10px">{a.title}</h1>
+      <p class="muted">{a.date} · {a.readMin} phút đọc</p>
+      {a.blocks.map((b) => {
+        if (b.t === 'h2') return <h2>{b.v}</h2>;
+        if (b.t === 'p') return <p>{b.v}</p>;
+        if (b.t === 'ul') return <ul>{b.v.map((i) => <li>{i}</li>)}</ul>;
+        if (b.t === 'compare') return <CompareTable />;
+        return (
+          <div class="cta-box">
+            <b>Cần tư vấn chọn két?</b>
+            <p style="margin:6px 0 12px">Cho chúng tôi biết bạn cất gì, đặt ở đâu. Chúng tôi gợi ý mẫu phù hợp.</p>
+            <a class="btn" href={`tel:${SITE.phones[0].tel}`}>☎ {SITE.phones[0].display}</a>
+            <a class="btn outline" style="margin-left:8px" href="/san-pham/">Xem các mẫu Neko Safe</a>
+          </div>
+        );
+      })}
+    </article>
+    <h2 style="margin-top:44px">Bài viết khác</h2>
+    <div class="news">{others.map((o) => <a class="card na" href={`/tin-tuc/${o.slug}/`}><span class="t">{o.tag}</span><h3>{o.title}</h3><small>{o.readMin} phút đọc</small></a>)}</div>
+  </div></section>
+</Base>

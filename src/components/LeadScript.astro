@@ -1,0 +1,50 @@
+---
+import { SITE } from '../data/site';
+const endpoint = `https://formsubmit.co/ajax/${SITE.leadEmail}`;
+const hotline = SITE.phones[0].display;
+---
+<script is:inline define:vars={{ endpoint, hotline }}>
+  (function () {
+    if (window.__leadInit) return;
+    window.__leadInit = true;
+    document.addEventListener('submit', function (e) {
+      var f = e.target.closest ? e.target.closest('form[data-lead]') : null;
+      if (!f) return;
+      e.preventDefault();
+      var vi = f.dataset.lang !== 'en';
+      var msg = f.querySelector('.lead-msg');
+      var btn = f.querySelector('button[type=submit]');
+      var phone = (f.elements['Số điện thoại'] || f.elements['Phone']).value.replace(/[\s.\-]/g, '');
+      if (!/^(\+?84|0)\d{9}$/.test(phone)) {
+        msg.className = 'lead-msg err';
+        msg.textContent = vi ? 'Số điện thoại chưa đúng, vui lòng kiểm tra lại.' : 'Please check the phone number.';
+        return;
+      }
+      var data = {};
+      new FormData(f).forEach(function (v, k) { data[k] = v; });
+      data['Trang gửi'] = location.href;
+      btn.disabled = true;
+      msg.className = 'lead-msg';
+      msg.textContent = vi ? 'Đang gửi...' : 'Sending...';
+      fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (j && (j.success === 'true' || j.success === true)) {
+            f.reset();
+            msg.className = 'lead-msg ok';
+            msg.textContent = vi ? 'Đã gửi thành công. Chúng tôi sẽ gọi lại cho bạn sớm nhất.' : 'Sent. We will call you back shortly.';
+          } else { throw new Error('fail'); }
+        })
+        .catch(function () {
+          msg.className = 'lead-msg err';
+          msg.textContent = (vi ? 'Chưa gửi được. Vui lòng gọi hotline ' : 'Could not send. Please call ') + hotline + '.';
+        })
+        .then(function () { btn.disabled = false; });
+    });
+    // chọn sẵn mẫu theo ?sp=NS60
+    var sp = new URLSearchParams(location.search).get('sp');
+    if (sp) document.querySelectorAll('select[name="Sản phẩm"]').forEach(function (s) {
+      Array.prototype.forEach.call(s.options, function (o) { if (o.value.indexOf(sp) > -1) s.value = o.value; });
+    });
+  })();
+</script>

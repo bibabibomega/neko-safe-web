@@ -1,0 +1,28 @@
+---
+import LeadScript from './LeadScript.astro';
+import { SITE, type Locale } from '../data/site';
+const { locale = 'vi', id = 'tu-van' } = Astro.props as { locale?: Locale; id?: string };
+const vi = locale === 'vi';
+const endpoint = `https://formsubmit.co/ajax/${SITE.leadEmail}`;
+const L = vi
+  ? { h: 'Để lại thông tin, nhận tư vấn miễn phí', p: 'Cho chúng tôi biết nhu cầu, chúng tôi gọi lại và gợi ý mẫu két phù hợp.', name: 'Họ và tên', phone: 'Số điện thoại', need: 'Bạn cần két để cất gì, đặt ở đâu?', needPh: 'Ví dụ: giấy tờ nhà, vàng, đặt trong phòng ngủ', btn: 'Gửi, nhận tư vấn', note: 'Thông tin chỉ dùng để liên hệ tư vấn.', priv: 'Chính sách bảo mật', sub: '[Website] YÊU CẦU TƯ VẤN mới' }
+  : { h: 'Leave your details for free advice', p: 'Tell us what you need and we will call you back with a suggestion.', name: 'Full name', phone: 'Phone', need: 'What will you store, and where will it go?', needPh: 'e.g. documents and gold, in the bedroom', btn: 'Send', note: 'Your details are used only to contact you.', priv: '', sub: '[Website] CONSULT REQUEST' };
+---
+<form class="lead-form card" id={id} data-lead data-lang={locale} action={endpoint} method="post" novalidate>
+  <h2 style="margin:0 0 4px">{L.h}</h2>
+  <p class="muted" style="margin:0 0 14px">{L.p}</p>
+  <input type="hidden" name="_subject" value={L.sub} />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="false" />
+  <input type="text" name="_honeypot" tabindex="-1" autocomplete="off" style="display:none" />
+  <input type="hidden" name="Loại" value={vi ? 'Xin tư vấn' : 'Consult (English page)'} />
+  <div class="fgrid">
+    <label>{L.name}<input type="text" name={vi ? 'Họ tên' : 'Name'} autocomplete="name" required /></label>
+    <label>{L.phone}<input type="tel" name={vi ? 'Số điện thoại' : 'Phone'} autocomplete="tel" inputmode="tel" required /></label>
+    <label class="full">{L.need}<textarea name={vi ? 'Nhu cầu' : 'Need'} rows="3" placeholder={L.needPh}></textarea></label>
+  </div>
+  <button class="btn" type="submit">{L.btn}</button>
+  <p class="lead-msg" role="status" aria-live="polite"></p>
+  <p class="muted small">{L.note} {vi && <a href="/chinh-sach/bao-mat/">{L.priv}</a>}</p>
+</form>
+<LeadScript />

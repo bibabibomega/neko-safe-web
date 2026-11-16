@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import OrderForm from '../../components/OrderForm.astro';
+import { SITE } from '../../data/site';
+---
+<Base locale="vi" path="/dat-hang/" title="Đặt mua két sắt Neko Safe, nhận hàng rồi thanh toán" description="Đặt mua két sắt Neko Safe online: điền thông tin, chúng tôi gọi xác nhận và giao tận nơi, thanh toán khi nhận hàng (COD).">
+  <section><div class="wrap" style="max-width:780px">
+    <h1>Đặt mua két sắt Neko Safe</h1>
+    <p class="muted">Giao tận nơi toàn quốc, thanh toán khi nhận hàng. Cần hỏi trước? Gọi <a href={`tel:${SITE.phones[0].tel}`}><b>{SITE.phones[0].display}</b></a> hoặc nhắn <a href={`https://zalo.me/${SITE.zalo}`}><b>Zalo {SITE.zaloDisplay}</b></a>.</p>
+    <OrderForm />
+  </div></section>
+</Base>

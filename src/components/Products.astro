@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from './ProductCard.astro';
+import { PRODUCTS, GROUP_LABEL, GROUP_LABEL_EN, nameVi, nameEn, money } from '../data/products';
+import { T, pathFor } from '../i18n/content';
+import { SITE, type Locale } from '../data/site';
+const { locale } = Astro.props as { locale: Locale };
+const vi = locale === 'vi';
+const c = T[locale].products;
+const abs = (p: string) => new URL(p, SITE.url).href;
+const list = {
+  '@context': 'https://schema.org', '@type': 'ItemList',
+  itemListElement: PRODUCTS.map((p, i) => ({
+    '@type': 'ListItem', position: i + 1,
+    item: {
+      '@type': 'Product', name: vi ? nameVi(p) : nameEn(p), description: p.tagline, brand: { '@type': 'Brand', name: p.brand },
+      url: abs(vi ? `/san-pham/${p.slug}/` : pathFor('en', 'products')),
+      ...(p.price ? { offers: { '@type': 'Offer', priceCurrency: 'VND', price: p.price, availability: 'https://schema.org/InStock' } } : {}),
+    },
+  })),
+};
+const labels = vi ? GROUP_LABEL : GROUP_LABEL_EN;
+---
+<Base locale={locale} page="products" title={c.title} description={c.description} schema={[list]}>
+  <section><div class="wrap">
+    <h1>{c.h1}</h1>
+    <div class="bar">
+      <div class="chips" id="chips">
+        <button class="fchip" data-f="all" aria-pressed="true">{c.all}</button>
+        {(['mini', 'gia-dinh', 'van-tay'] as const).map((g) => <button class="fchip" data-f={g} aria-pressed="false">{labels[g]}</button>)}
+      </div>
+      <label>{c.sort}: <select id="sort">
+        <option value="def">{c.sortOpts.def}</option><option value="wa">{c.sortOpts.wa}</option>
+        <option value="wd">{c.sortOpts.wd}</option><option value="n">{c.sortOpts.n}</option>
+      </select></label>
+    </div>
+    <p class="muted"><span id="count">{PRODUCTS.length}</span> {c.count}</p>
+    <div class="grid" id="list">{PRODUCTS.map((p) => <ProductCard p={p} locale={locale} />)}</div>
+  </div></section>
+</Base>
+
+<script is:inline>
+  (function () {
+    var list = document.getElementById('list');
+    var cards = Array.prototype.slice.call(list.children);
+    var orig = cards.slice();
+    var f = 'all';
+    function apply() {
+      var s = document.getElementById('sort').value;
+      var arr = orig.slice();
+      if (s === 'wa') arr.sort(function (a, b) { return a.dataset.weight - b.dataset.weight; });
+      if (s === 'wd') arr.sort(function (a, b) { return b.dataset.weight - a.dataset.weight; });
+      if (s === 'n') arr.sort(function (a, b) { return a.dataset.name.localeCompare(b.dataset.name, 'vi'); });
+      var n = 0;
+      arr.forEach(function (el) {
+        var show = f === 'all' || el.dataset.group === f;
+        el.style.display = show ? '' : 'none';
+        if (show) n++;
+        list.appendChild(el);
+      });
+      document.getElementById('count').textContent = n;
+      document.querySelectorAll('#chips .fchip').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.f === f ? 'true' : 'false'); });
+    }
+    document.getElementById('chips').addEventListener('click', function (e) {
+      var b = e.target.closest('.fchip'); if (!b) return;
+      f = b.dataset.f; history.replaceState(null, '', f === 'all' ? location.pathname : '#' + f); apply();
+    });
+    document.getElementById('sort').addEventListener('change', apply);
+    var h = location.hash.slice(1);
+    if (['mini', 'gia-dinh', 'van-tay'].indexOf(h) > -1) f = h;
+    apply();
+  })();
+</script>

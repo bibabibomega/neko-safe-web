@@ -1,0 +1,28 @@
+---
+import SafeArt from './SafeArt.astro';
+import { GROUP_LABEL, GROUP_LABEL_EN, nameVi, nameEn, dimText, money, type Product } from '../data/products';
+import { T, pathFor } from '../i18n/content';
+import type { Locale } from '../data/site';
+const { p, locale } = Astro.props as { p: Product; locale: Locale };
+const vi = locale === 'vi';
+const c = T[locale].products;
+const href = vi ? `/san-pham/${p.slug}/` : pathFor('en', 'contact');
+const name = vi ? nameVi(p) : nameEn(p);
+const fp = p.group === 'van-tay';
+---
+<article class="card pc" data-group={p.group} data-weight={p.weight} data-name={name}>
+  <span class={`badge${fp ? ' fp' : ''}`}>{(vi ? GROUP_LABEL : GROUP_LABEL_EN)[p.group]}</span>
+  <div class="img">
+    {p.image ? <img src={p.image} alt={name} width="400" height="300" loading="lazy" /> : <SafeArt color={p.colors[0]} code={p.code} fp={fp} brand={p.brand.split(' ')[0].toUpperCase()} />}
+  </div>
+  <div class="body">
+    <h3><a href={href}>{name}</a></h3>
+    <p class="tag">{p.tagline}</p>
+    <div class="specs">
+      <span class="chip">{c.weight} {p.weight} kg</span>
+      <span class="chip">{p.colors.length} {vi ? 'màu' : 'colors'}</span>
+    </div>
+    <div class="price">{p.price ? money(p.price) : c.contactPrice}{p.oldPrice ? <s>{money(p.oldPrice)}</s> : null}</div>
+    <span class="more">{c.detail} →</span>
+  </div>
+</article>

@@ -1,0 +1,133 @@
+---
+import '../styles/global.css';
+import { SITE, HTML_LANG, LOCALES, type Locale } from '../data/site';
+import { T, pathFor, VI_PAGES, type Page } from '../i18n/content';
+
+interface Props {
+  locale: Locale;
+  page?: Page;            // trang song ngữ (có bản vi và en)
+  path?: string;          // trang chỉ có tiếng Việt: đường dẫn của trang
+  title: string;
+  description: string;
+  schema?: object[];
+  type?: 'website' | 'article';
+}
+const { locale, page, path, title, description, schema = [], type = 'website' } = Astro.props;
+const t = T[locale];
+const abs = (p: string) => new URL(p, SITE.url).href;
+const here = page ? pathFor(locale, page) : (path as string);
+const canonical = abs(here);
+const other: Locale = locale === 'vi' ? 'en' : 'vi';
+const switchHref = page ? pathFor(other, page) : '/en/';
+const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
+const vi = locale === 'vi';
+const p1 = SITE.phones[0];
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'OnlineStore',
+  name: SITE.name,
+  url: SITE.url,
+  logo: abs(SITE.logo),
+  ...(SITE.email ? { email: SITE.email } : {}),
+  areaServed: 'VN',
+  telephone: SITE.phones.map((p) => p.tel),
+  ...(SITE.address.city ? { address: { '@type': 'PostalAddress', streetAddress: SITE.address.street, addressLocality: SITE.address.city, addressRegion: SITE.address.region, postalCode: SITE.address.postalCode, addressCountry: SITE.address.country } } : {}),
+  ...(SITE.sameAs.length ? { sameAs: SITE.sameAs } : {}),
+};
+const nav: [string, string][] = [
+  [pathFor(locale, 'home'), t.nav.home],
+  [pathFor(locale, 'products'), t.nav.products],
+  ...(vi ? ([[VI_PAGES.news, t.nav.news]] as [string, string][]) : []),
+  [pathFor(locale, 'contact'), t.nav.contact],
+];
+const isHere = (href: string) => (href === '/' || href === '/en/' ? here === href : here.startsWith(href));
+---
+<!doctype html>
+<html lang={HTML_LANG[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {!SITE.indexable && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#12284c" />
+    <link rel="canonical" href={canonical} />
+    {page && LOCALES.map((l) => <link rel="alternate" hreflang={HTML_LANG[l]} href={abs(pathFor(l, page))} />)}
+    {page && <link rel="alternate" hreflang="x-default" href={abs(pathFor('vi', page))} />}
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={abs(SITE.ogImage)} />
+    <meta property="og:locale" content={HTML_LANG[locale].replace('-', '_')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(org)} />
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="wrap">
+        <span class="hide-m">{vi ? 'Giao tận nơi toàn quốc' : 'Delivery nationwide'}</span>
+        <span>Hotline: {SITE.phones.map((p, i) => <>{i > 0 && ' / '}<a href={`tel:${p.tel}`}>{p.display}</a></>)}</span>
+      </div>
+    </div>
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href={pathFor(locale, 'home')}><img src="/favicon.svg" alt="" width="34" height="34" /><span>{SITE.name}</span></a>
+        <nav class="main" aria-label="Main">
+          {nav.map(([href, label]) => <a href={href} aria-current={isHere(href) ? 'page' : undefined}>{label}</a>)}
+          {vi && <a class="nav-order" href={VI_PAGES.order} aria-current={isHere(VI_PAGES.order) ? 'page' : undefined}>Đặt hàng ngay</a>}
+          <a href={switchHref} hreflang={HTML_LANG[other]} lang={HTML_LANG[other]}>{t.otherLang}</a>
+        </nav>
+        <a class="call-btn" href={`tel:${p1.tel}`}>☎ {p1.display}</a>
+      </div>
+    </header>
+
+    <main><slot /></main>
+
+    <footer class="site">
+      <div class="wrap">
+        <div class="cols">
+          <div>
+            <h4>{SITE.name}</h4>
+            <p style="margin:0 0 8px">{vi ? 'Bán két sắt Neko Safe online, giao tận nơi toàn quốc.' : 'Neko Safe safes sold online, delivered across Vietnam.'}</p>
+            {SITE.phones.map((p) => <a href={`tel:${p.tel}`}>☎ {p.display}</a>)}
+            {SITE.zalo && <a href={`https://zalo.me/${SITE.zalo}`}>Zalo: {SITE.zaloDisplay}</a>}
+            {SITE.email && <a href={`mailto:${SITE.email}`}>✉ {SITE.email}</a>}          </div>
+          <div>
+            <h4>{vi ? 'Sản phẩm' : 'Safes'}</h4>
+            <a href={pathFor(locale, 'products') + '#mini'}>{vi ? 'Két mini' : 'Mini safes'}</a>
+            <a href={pathFor(locale, 'products') + '#gia-dinh'}>{vi ? 'Két gia đình' : 'Home safes'}</a>
+            <a href={pathFor(locale, 'products') + '#van-tay'}>{vi ? 'Két vân tay' : 'Fingerprint safes'}</a>
+          </div>
+          {vi && (
+            <div>
+              <h4>Chính sách</h4>
+              <a href={VI_PAGES.payment}>Hình thức thanh toán</a>
+              <a href={VI_PAGES.shipping}>Chính sách vận chuyển</a>
+              <a href={VI_PAGES.warranty}>Bảo hành</a>
+              <a href={VI_PAGES.returns}>Đổi trả</a>
+              <a href={VI_PAGES.privacy}>Bảo mật thông tin</a>
+            </div>
+          )}
+          <div>
+            <h4>{vi ? 'Kinh nghiệm' : 'More'}</h4>
+            {vi
+              ? <><a href={VI_PAGES.news}>Tin tức, đánh giá</a><a href="/tin-tuc/cach-chon-ket-sat-gia-dinh/">Cách chọn két sắt</a></>
+              : <a href="/">Tiếng Việt: tin tức</a>}
+            <a href={pathFor(locale, 'contact')}>{t.nav.contact}</a>
+          </div>
+        </div>
+        <div class="copy">© {new Date().getFullYear()} {SITE.name}. {vi ? 'Bảo lưu mọi quyền.' : 'All rights reserved.'}</div>
+      </div>
+    </footer>
+
+    <div class="callbar">
+      <a href={`tel:${p1.tel}`}>☎ {t.call}</a>
+      {SITE.zalo && <a class="z" href={`https://zalo.me/${SITE.zalo}`}>Chat Zalo</a>}
+    </div>
+  </body>
+</html>

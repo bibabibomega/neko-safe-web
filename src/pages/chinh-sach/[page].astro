@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../data/site';
+import { PAGES } from '../../data/policies';
+
+export function getStaticPaths() {
+  return Object.keys(PAGES).map((k) => ({ params: { page: k }, props: { k } }));
+}
+const { k } = Astro.props;
+const d = PAGES[k];
+---
+<Base locale="vi" path={`/chinh-sach/${k}/`} title={d.title} description={d.description}>
+  <div class="wrap crumb"><a href="/">Trang chủ</a> › {d.h1}</div>
+  <section style="padding-top:12px"><div class="wrap prose">
+    <h1>{d.h1}</h1>
+    {d.blocks.map((b) => <><h2>{b.h}</h2><ul>{b.items.map((i) => <li>{i}</li>)}</ul></>)}
+    <p class="note">Hotline hỗ trợ: {SITE.phones.map((p) => p.display).join(' / ')}</p>
+  </div></section>
+</Base>

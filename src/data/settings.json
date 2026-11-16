@@ -1,0 +1,21 @@
+{
+  "url": "https://example.com",
+  "indexable": false,
+  "name": "Két Sắt Neko Safe",
+  "brand": "Neko Safe",
+  "email": "",
+  "leadEmail": "simso688@gmail.com",
+  "zalo": "0918008883",
+  "phones": [
+    "0343.989.989"
+  ],
+  "address": {
+    "street": "",
+    "city": "",
+    "region": "",
+    "postalCode": "",
+    "country": "VN"
+  },
+  "ogImage": "/og-default.png",
+  "sameAs": []
+}

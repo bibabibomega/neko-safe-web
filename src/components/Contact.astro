@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { T } from '../i18n/content';
+import ConsultForm from './ConsultForm.astro';
+import { SITE, type Locale } from '../data/site';
+const { locale } = Astro.props as { locale: Locale };
+const c = T[locale].contact;
+---
+<Base locale={locale} page="contact" title={c.title} description={c.description}>
+  <section><div class="wrap prose">
+    <h1>{c.h1}</h1>
+    <p class="muted">{c.lead}</p>
+    <div class="card" style="padding:22px">
+      <p style="margin:0 0 10px"><b>Hotline</b></p>
+      <div class="btns" style="margin:0 0 14px">
+        {SITE.phones.map((p) => <a class="btn" href={`tel:${p.tel}`}>☎ {p.display}</a>)}
+        {SITE.zalo && <a class="btn zalo" href={`https://zalo.me/${SITE.zalo}`}>Chat Zalo {SITE.zaloDisplay}</a>}
+      </div>
+      {SITE.email && <p style="margin:0">{c.email}: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>}
+      <p class="muted" style="margin:8px 0 0">{c.hours}</p>
+    </div>
+    <div style="margin-top:22px"><ConsultForm locale={locale} /></div>
+  </div></section>
+</Base>

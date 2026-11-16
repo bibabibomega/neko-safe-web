@@ -1,0 +1,230 @@
+[
+  {
+    "code": "NS20",
+    "group": "mini",
+    "lock": "Khóa điện tử",
+    "weight": 6,
+    "dims": [
+      220,
+      315,
+      255
+    ],
+    "colors": [
+      "Đen",
+      "Trắng",
+      "Xanh",
+      "Hồng"
+    ],
+    "tagline": "Nhỏ gọn, nhiều màu, hợp để trong tủ hoặc ngăn kéo.",
+    "slug": "ket-sat-neko-safe-ns20",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS25",
+    "group": "mini",
+    "lock": "Khóa điện tử",
+    "weight": 7,
+    "dims": [
+      240,
+      350,
+      280
+    ],
+    "colors": [
+      "Đỏ"
+    ],
+    "tagline": "Két mini màu đỏ nổi bật cho gia đình.",
+    "slug": "ket-sat-neko-safe-ns25",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS30",
+    "group": "mini",
+    "lock": "Khóa điện tử",
+    "weight": 9,
+    "dims": [
+      285,
+      380,
+      305
+    ],
+    "colors": [
+      "Trắng"
+    ],
+    "tagline": "Khoang chứa rộng hơn, vẫn gọn để đặt bàn hoặc tủ.",
+    "slug": "ket-sat-neko-safe-ns30",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS40",
+    "group": "gia-dinh",
+    "lock": "Khóa điện tử",
+    "weight": 12.5,
+    "dims": [
+      285,
+      385,
+      320
+    ],
+    "colors": [
+      "Đen"
+    ],
+    "tagline": "Cỡ vừa, đủ chỗ cho giấy tờ, vàng và tiền mặt.",
+    "slug": "ket-sat-neko-safe-ns40",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS50",
+    "group": "gia-dinh",
+    "lock": "Khóa điện tử",
+    "weight": 17,
+    "dims": [
+      425,
+      355,
+      340
+    ],
+    "colors": [
+      "Đen",
+      "Trắng",
+      "Đỏ"
+    ],
+    "tagline": "Dung tích lớn cho gia đình, nhiều lựa chọn màu.",
+    "slug": "ket-sat-neko-safe-ns50",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS60",
+    "group": "gia-dinh",
+    "lock": "Khóa điện tử",
+    "weight": 19.5,
+    "dims": [
+      465,
+      370,
+      360
+    ],
+    "colors": [
+      "Đen",
+      "Trắng"
+    ],
+    "tagline": "Thân két nặng và chắc hơn, hợp đặt cố định.",
+    "slug": "ket-sat-neko-safe-ns60",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS70",
+    "group": "gia-dinh",
+    "lock": "Khóa điện tử",
+    "weight": 20,
+    "dims": [
+      285,
+      385,
+      330
+    ],
+    "colors": [
+      "Đen"
+    ],
+    "tagline": "Dòng \"siêu cường\" thân dày, kích thước gọn.",
+    "slug": "ket-sat-neko-safe-ns70",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS80FE",
+    "group": "van-tay",
+    "lock": "Khóa vân tay + mã số + chìa cơ",
+    "weight": 27,
+    "dims": [
+      440,
+      365,
+      350
+    ],
+    "colors": [
+      "Trắng",
+      "Đen",
+      "Nâu"
+    ],
+    "tagline": "Mở bằng vân tay, tiện cho cả nhà dùng chung.",
+    "slug": "ket-sat-neko-safe-ns80fe",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS90FE",
+    "group": "van-tay",
+    "lock": "Khóa vân tay + mã số + chìa cơ",
+    "weight": 31,
+    "dims": [
+      485,
+      385,
+      365
+    ],
+    "colors": [
+      "Đen"
+    ],
+    "tagline": "Vân tay, khoang chứa lớn cho văn phòng nhỏ.",
+    "slug": "ket-sat-neko-safe-ns90fe",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  },
+  {
+    "code": "NS100FE",
+    "group": "van-tay",
+    "lock": "Khóa vân tay + mã số + chìa cơ",
+    "weight": 40,
+    "dims": [
+      565,
+      395,
+      410
+    ],
+    "colors": [
+      "Đen"
+    ],
+    "tagline": "Mẫu lớn nhất dòng, vân tay, thân nặng khó nhấc.",
+    "slug": "ket-sat-neko-safe-ns100fe",
+    "image": "",
+    "price": 0,
+    "oldPrice": 0,
+    "brand": "Neko Safe",
+    "name": "",
+    "hidden": false
+  }
+]

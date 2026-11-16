@@ -1,0 +1,32 @@
+---
+import LeadScript from './LeadScript.astro';
+import { PRODUCTS, nameVi } from '../data/products';
+import { SITE } from '../data/site';
+const { selected = '', id = 'dat-hang' } = Astro.props as { selected?: string; id?: string };
+const endpoint = `https://formsubmit.co/ajax/${SITE.leadEmail}`;
+---
+<form class="lead-form card" id={id} data-lead data-lang="vi" action={endpoint} method="post" novalidate>
+  <h2 style="margin:0 0 4px">Đặt hàng ngay</h2>
+  <p class="muted" style="margin:0 0 14px">Điền thông tin, chúng tôi gọi xác nhận đơn và giao tận nơi. <b>Thanh toán khi nhận hàng (COD).</b></p>
+  <input type="hidden" name="_subject" value="[Website] ĐƠN ĐẶT HÀNG mới" />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="false" />
+  <input type="text" name="_honeypot" tabindex="-1" autocomplete="off" style="display:none" />
+  <input type="hidden" name="Loại" value="Đặt hàng (COD)" />
+  <div class="fgrid">
+    <label class="full">Mẫu két<select name="Sản phẩm" required>
+      <option value="Chưa chọn mẫu, cần tư vấn">Chưa chọn, tôi cần tư vấn</option>
+      {PRODUCTS.map((p) => <option value={`${p.brand} ${p.code}`} selected={p.code === selected}>{nameVi(p)} ({p.weight} kg)</option>)}
+    </select></label>
+    <label>Số lượng<input type="number" name="Số lượng" value="1" min="1" max="20" required /></label>
+    <label>Họ và tên<input type="text" name="Họ tên" autocomplete="name" required /></label>
+    <label>Số điện thoại<input type="tel" name="Số điện thoại" autocomplete="tel" inputmode="tel" required /></label>
+    <label class="full">Địa chỉ nhận hàng (số nhà, đường, phường/xã, quận/huyện, tỉnh/thành)<input type="text" name="Địa chỉ" autocomplete="street-address" required /></label>
+    <label class="full">Ghi chú (không bắt buộc)<textarea name="Ghi chú" rows="2"></textarea></label>
+  </div>
+  <p class="pay">Thanh toán: <b>nhận hàng rồi trả tiền (COD)</b>. Giá và phí giao được xác nhận qua điện thoại trước khi giao.</p>
+  <button class="btn" type="submit">Gửi đơn đặt hàng</button>
+  <p class="lead-msg" role="status" aria-live="polite"></p>
+  <p class="muted small">Thông tin chỉ dùng để liên hệ và giao hàng. Xem <a href="/chinh-sach/bao-mat/">chính sách bảo mật</a>.</p>
+</form>
+<LeadScript />

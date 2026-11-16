@@ -1,0 +1,19 @@
+---
+import { PRODUCTS, nameVi, dimText } from '../data/products';
+---
+<div class="table-wrap">
+  <table class="t">
+    <thead><tr><th>Mẫu</th><th>Loại khóa</th><th>Nặng</th><th>Kích thước (D x R x C)</th><th>Màu</th></tr></thead>
+    <tbody>
+      {PRODUCTS.map((p) => (
+        <tr>
+          <td><a href={`/san-pham/${p.slug}/`}>{nameVi(p)}</a></td>
+          <td>{p.lock}</td>
+          <td>{p.weight} kg</td>
+          <td>{dimText(p)}</td>
+          <td>{p.colors.join(', ')}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

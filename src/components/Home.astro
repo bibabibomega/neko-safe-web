@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from './ProductCard.astro';
+import SafeArt from './SafeArt.astro';
+import ConsultForm from './ConsultForm.astro';
+import { PRODUCTS } from '../data/products';
+import { ARTICLES } from '../data/articles';
+import { T, pathFor, VI_PAGES } from '../i18n/content';
+import { SITE, type Locale } from '../data/site';
+const { locale } = Astro.props as { locale: Locale };
+const vi = locale === 'vi';
+const c = T[locale].home;
+const featured = PRODUCTS.slice(0, 8);
+const icons = ['🚚', '💬', '🛡️', '📞'];
+const faqLd = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: c.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+const site = { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: SITE.url, inLanguage: locale };
+---
+<Base locale={locale} page="home" title={c.title} description={c.description} schema={[site, faqLd]}>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">{c.eyebrow}</span>
+        <h1>{c.h1}</h1>
+        <p class="lead">{c.lead}</p>
+        <div class="btns">
+          <a class="btn" href={pathFor(locale, 'products')}>{c.cta}</a>
+          <a class="btn ghost" href={`tel:${SITE.phones[0].tel}`}>☎ {c.contactCta}</a>
+        </div>
+      </div>
+      <div class="art" aria-hidden="true">
+        <SafeArt color="Đen" code="NS60" w={230} />
+        <div style="margin-left:-40px;margin-top:60px"><SafeArt color="Trắng" code="NS20" fp={false} w={170} /></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust"><div class="wrap">
+    {c.trust.map((x, i) => <div class="it"><div class="ic">{icons[i]}</div><div><b>{x.h}</b><span>{x.p}</span></div></div>)}
+  </div></div>
+
+  <section><div class="wrap">
+    <h2>{c.catsTitle}</h2>
+    <div class="grid cats">
+      {c.cats.map((k) => (
+        <a class="card cat" href={`${pathFor(locale, 'products')}#${k.k}`}>
+          <div class="ico"><SafeArt color={k.k === 'van-tay' ? 'Nâu' : k.k === 'mini' ? 'Hồng' : 'Đen'} code="" fp={k.k === 'van-tay'} w={70} /></div>
+          <h3>{k.h}</h3><p>{k.p}</p>
+        </a>
+      ))}
+    </div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">
+    <div class="sec-head"><h2>{c.featured}</h2><a href={pathFor(locale, 'products')}><b>{c.seeAll} →</b></a></div>
+    <div class="grid">{featured.map((p) => <ProductCard p={p} locale={locale} />)}</div>
+  </div></section>
+
+  <section style="background:#fff"><div class="wrap">
+    <h2>{c.whyTitle}</h2>
+    <div class="points">{c.why.map((x, i) => <div class="card point"><div class="n">{i + 1}</div><h3>{x.h}</h3><p>{x.p}</p></div>)}</div>
+  </div></section>
+
+  <section class="steps"><div class="wrap">
+    <h2>{c.stepsTitle}</h2>
+    <div class="points">{c.steps.map((x, i) => <div class="card point"><div class="n">{i + 1}</div><h3>{x.h}</h3><p>{x.p}</p></div>)}</div>
+    {vi && <p class="muted" style="margin-top:14px">Chi tiết: <a href={VI_PAGES.payment}>hình thức thanh toán</a>, <a href={VI_PAGES.shipping}>vận chuyển</a>, <a href={VI_PAGES.warranty}>bảo hành</a>, <a href={VI_PAGES.returns}>đổi trả</a>.</p>}
+  </div></section>
+
+  {vi && (
+    <section style="background:#fff"><div class="wrap">
+      <div class="sec-head"><h2>{c.newsTitle}</h2><a href={VI_PAGES.news}><b>{c.seeAll} →</b></a></div>
+      <div class="news">
+        {ARTICLES.slice(0, 3).map((a) => (
+          <a class="card na" href={`/tin-tuc/${a.slug}/`}><span class="t">{a.tag}</span><h3>{a.title}</h3><p>{a.description}</p><small>{a.readMin} phút đọc</small></a>
+        ))}
+      </div>
+    </div></section>
+  )}
+
+  <section><div class="wrap" style="max-width:820px">
+    <h2>{c.faqTitle}</h2>
+    {c.faq.map((f) => <details class="faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}
+  </div></section>
+
+  <section style="background:#fff"><div class="wrap" style="max-width:760px">
+    <ConsultForm locale={locale} id="tu-van" />
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="band">
+      <div><h2>{c.band}</h2><p>{c.bandP}</p></div>
+      <a class="btn" href={`tel:${SITE.phones[0].tel}`}>☎ {SITE.phones[0].display}</a>
+    </div>
+  </div></section>
+</Base>

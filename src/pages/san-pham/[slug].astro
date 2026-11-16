@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import SafeArt from '../../components/SafeArt.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import OrderForm from '../../components/OrderForm.astro';
+import { PRODUCTS, GROUP_LABEL, nameVi, dimText, money } from '../../data/products';
+import { SITE } from '../../data/site';
+import { VI_PAGES } from '../../i18n/content';
+
+export function getStaticPaths() {
+  return PRODUCTS.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const name = nameVi(p);
+const fp = p.group === 'van-tay';
+const abs = (x: string) => new URL(x, SITE.url).href;
+const path = `/san-pham/${p.slug}/`;
+const title = `${name} ${fp ? 'vân tay' : 'khóa điện tử'}: thông số, giá`;
+const description = `${name}: nặng ${p.weight} kg, kích thước ${dimText(p)}, ${p.lock.toLowerCase()}, màu ${p.colors.join(', ').toLowerCase()}. Giao tận nơi toàn quốc, hotline ${SITE.phones[0].display}.`;
+const related = PRODUCTS.filter((x) => x.slug !== p.slug && (x.group === p.group || Math.abs(x.weight - p.weight) < 8)).slice(0, 3);
+const MAP: Record<string, string> = { 'Đen': '#2f3542', 'Trắng': '#f4f6fa', 'Đỏ': '#d93a3a', 'Xanh': '#3a8dde', 'Hồng': '#f08cb0', 'Nâu': '#7b5a43' };
+const ld = [
+  {
+    '@context': 'https://schema.org', '@type': 'Product', name, description,
+    brand: { '@type': 'Brand', name: p.brand }, sku: p.code, image: abs(p.image || SITE.ogImage),
+    weight: { '@type': 'QuantitativeValue', value: p.weight, unitCode: 'KGM' },
+    ...(p.price ? { offers: { '@type': 'Offer', priceCurrency: 'VND', price: p.price, availability: 'https://schema.org/InStock', url: abs(path) } } : {}),
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: abs('/') },
+      { '@type': 'ListItem', position: 2, name: 'Sản phẩm', item: abs('/san-pham/') },
+      { '@type': 'ListItem', position: 3, name, item: abs(path) },
+    ],
+  },
+];
+---
+<Base locale="vi" path={path} title={title} description={description} schema={ld}>
+  <div class="wrap crumb"><a href="/">Trang chủ</a> › <a href="/san-pham/">Sản phẩm</a> › {name}</div>
+  <section style="padding-top:12px"><div class="wrap">
+    <div class="pd">
+      <div class="gal">{p.image ? <img src={p.image} alt={name} width="600" height="450" /> : <SafeArt color={p.colors[0]} code={p.code} fp={fp} w={380} brand={p.brand.split(' ')[0].toUpperCase()} />}</div>
+      <div class="info">
+        <span class={`chip`}>{GROUP_LABEL[p.group]}</span>
+        <h1 style="margin-top:8px">{name} {fp ? 'vân tay điện tử' : 'khóa điện tử'}</h1>
+        <p class="tag">{p.tagline}</p>
+        <div class="price">{p.price ? money(p.price) : 'Liên hệ báo giá'}{p.oldPrice ? <s>{money(p.oldPrice)}</s> : null}</div>
+        <div class="colors">Màu: {p.colors.map((c) => <span><i class="dot" style={`background:${MAP[c] ?? '#ccc'}`}></i>{c}</span>)}</div>
+        <div class="btns">
+          <a class="btn" href="#dat-hang">Đặt hàng ngay</a>
+          <a class="btn outline" href={`tel:${SITE.phones[0].tel}`}>☎ {SITE.phones[0].display}</a>
+          {SITE.zalo && <a class="btn zalo" href={`https://zalo.me/${SITE.zalo}`}>Chat Zalo {SITE.zaloDisplay}</a>}
+        </div>
+        <ul class="ticks">
+          <li>Giao tận nơi toàn quốc [điền phí và thời gian]</li>
+          <li>Bảo hành [..] tháng [điền hình thức bảo hành]</li>
+          <li>Tư vấn miễn phí, hướng dẫn sử dụng sau khi nhận</li>
+          <li>Xem <a href={VI_PAGES.payment}>hình thức thanh toán</a> và <a href={VI_PAGES.returns}>chính sách đổi trả</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="margin-top:36px">Thông số kỹ thuật</h2>
+    <table class="spec-tbl">
+      <tbody>
+        <tr><td>Thương hiệu / mẫu</td><td>{p.brand} {p.code}</td></tr>
+        <tr><td>Loại khóa</td><td>{p.lock}</td></tr>
+        <tr><td>Khối lượng</td><td>{p.weight} kg</td></tr>
+        <tr><td>Kích thước ngoài (D x R x C)</td><td>{dimText(p)}</td></tr>
+        <tr><td>Màu sắc</td><td>{p.colors.join(', ')}</td></tr>
+        <tr><td>Bảo hành</td><td>[..] tháng</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:12px">Thông số theo thông tin công bố, có thể chênh nhẹ giữa các lô hàng. Hỏi hotline về khả năng chống cháy và cách mở khi hết pin của đúng mẫu bạn chọn.</p>
+
+    <div style="margin-top:36px;max-width:780px"><OrderForm selected={p.code} /></div>
+
+    <h2 style="margin-top:36px">Mẫu tương tự</h2>
+    <div class="grid">{related.map((r) => <ProductCard p={r} locale="vi" />)}</div>
+  </div></section>
+</Base>

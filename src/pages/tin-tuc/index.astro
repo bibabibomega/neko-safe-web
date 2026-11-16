@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import { ARTICLES } from '../../data/articles';
+---
+<Base locale="vi" path="/tin-tuc/" title="Tin tức, đánh giá và kinh nghiệm chọn két sắt" description="Bài đánh giá ưu nhược điểm két sắt Neko Safe, cách chọn két sắt gia đình, so sánh khóa điện tử và vân tay, hướng dẫn sử dụng.">
+  <section><div class="wrap">
+    <h1>Tin tức và kinh nghiệm chọn két sắt</h1>
+    <p class="muted">Đánh giá, so sánh và hướng dẫn giúp bạn chọn và dùng két sắt đúng cách.</p>
+    <div class="news" style="margin-top:20px">
+      {ARTICLES.map((a) => (
+        <a class="card na" href={`/tin-tuc/${a.slug}/`}><span class="t">{a.tag}</span><h3>{a.title}</h3><p>{a.description}</p><small>{a.date} · {a.readMin} phút đọc</small></a>
+      ))}
+    </div>
+  </div></section>
+</Base>

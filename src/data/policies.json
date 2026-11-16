@@ -1,0 +1,161 @@
+{
+  "thanh-toan": {
+    "title": "Hình thức thanh toán khi mua két sắt Neko Safe",
+    "description": "Các cách thanh toán khi mua két sắt Neko Safe online: thanh toán khi nhận hàng, chuyển khoản ngân hàng.",
+    "h1": "Hình thức thanh toán",
+    "blocks": [
+      {
+        "h": "Thanh toán khi nhận hàng (COD)",
+        "items": [
+          "[Có / không áp dụng.] Bạn kiểm tra hàng rồi thanh toán cho nhân viên giao hàng.",
+          "[Điều kiện áp dụng, ví dụ khu vực hoặc giá trị đơn.]"
+        ]
+      },
+      {
+        "h": "Chuyển khoản ngân hàng",
+        "items": [
+          "Ngân hàng: [TÊN NGÂN HÀNG]",
+          "Số tài khoản: [SỐ TÀI KHOẢN]",
+          "Chủ tài khoản: [TÊN CHỦ TÀI KHOẢN]",
+          "Nội dung chuyển khoản: Họ tên + số điện thoại đặt hàng."
+        ]
+      },
+      {
+        "h": "Lưu ý",
+        "items": [
+          "Giá và khuyến mãi được xác nhận qua điện thoại trước khi giao.",
+          "Chỉ chuyển khoản vào đúng tài khoản được nhắn bởi hotline của cửa hàng."
+        ]
+      }
+    ]
+  },
+  "van-chuyen": {
+    "title": "Chính sách vận chuyển, giao két sắt tận nơi",
+    "description": "Thời gian giao, phí vận chuyển và cách nhận két sắt Neko Safe giao tận nơi toàn quốc.",
+    "h1": "Chính sách vận chuyển",
+    "blocks": [
+      {
+        "h": "Phạm vi giao hàng",
+        "items": [
+          "Giao tận nơi toàn quốc. [Liệt kê khu vực hạn chế nếu có.]"
+        ]
+      },
+      {
+        "h": "Thời gian giao",
+        "items": [
+          "Nội thành: [..] ngày.",
+          "Tỉnh thành khác: [..] ngày."
+        ]
+      },
+      {
+        "h": "Phí vận chuyển",
+        "items": [
+          "[Miễn phí / bảng phí theo khu vực và khối lượng.]"
+        ]
+      },
+      {
+        "h": "Khi nhận hàng",
+        "items": [
+          "Kiểm tra thùng hàng và tình trạng két trước khi ký nhận.",
+          "Nếu có móp méo, hư hỏng, báo ngay hotline và chụp ảnh để được hỗ trợ."
+        ]
+      }
+    ]
+  },
+  "bao-hanh": {
+    "title": "Chính sách bảo hành két sắt Neko Safe",
+    "description": "Thời gian, điều kiện và cách bảo hành két sắt Neko Safe mua online.",
+    "h1": "Chính sách bảo hành",
+    "blocks": [
+      {
+        "h": "Thời gian bảo hành",
+        "items": [
+          "[..] tháng kể từ ngày nhận hàng. [Ghi rõ bảo hành chính hãng hay bảo hành của cửa hàng.]"
+        ]
+      },
+      {
+        "h": "Phạm vi bảo hành",
+        "items": [
+          "[Lỗi khóa điện tử, bo mạch, cảm biến vân tay do nhà sản xuất.]",
+          "[Hình thức: bảo hành tại nhà / gửi về hãng.]"
+        ]
+      },
+      {
+        "h": "Không bảo hành",
+        "items": [
+          "[Hư hỏng do rơi vỡ, vào nước, tự ý tháo sửa, hết pin hoặc dùng sai pin.]"
+        ]
+      },
+      {
+        "h": "Cách yêu cầu bảo hành",
+        "items": [
+          "Gọi hotline {{hotline}} hoặc nhắn Zalo {{zalo}}, cung cấp mã mẫu (ví dụ NS60) và ảnh/video lỗi."
+        ]
+      }
+    ]
+  },
+  "bao-mat": {
+    "title": "Chính sách bảo mật thông tin khách hàng",
+    "description": "Cách chúng tôi thu thập và sử dụng thông tin bạn để lại khi đặt hàng hoặc xin tư vấn két sắt.",
+    "h1": "Chính sách bảo mật thông tin",
+    "blocks": [
+      {
+        "h": "Thông tin chúng tôi thu thập",
+        "items": [
+          "Họ tên, số điện thoại, địa chỉ nhận hàng, nhu cầu mua do bạn điền vào biểu mẫu đặt hàng hoặc xin tư vấn."
+        ]
+      },
+      {
+        "h": "Mục đích sử dụng",
+        "items": [
+          "Gọi xác nhận đơn, giao hàng, bảo hành và tư vấn chọn két.",
+          "Không bán hoặc chia sẻ thông tin của bạn cho bên thứ ba vì mục đích quảng cáo."
+        ]
+      },
+      {
+        "h": "Cách thông tin được gửi",
+        "items": [
+          "Biểu mẫu gửi thông tin về email của cửa hàng qua dịch vụ nhận biểu mẫu (FormSubmit). Dịch vụ này chỉ chuyển tiếp nội dung biểu mẫu đến email của chúng tôi."
+        ]
+      },
+      {
+        "h": "Quyền của bạn",
+        "items": [
+          "Muốn xem, sửa hoặc xóa thông tin, gọi {{hotline}} hoặc nhắn Zalo {{zalo}}.",
+          "[Bổ sung tên pháp nhân và địa chỉ của cửa hàng khi có.]"
+        ]
+      }
+    ]
+  },
+  "doi-tra": {
+    "title": "Chính sách đổi trả két sắt",
+    "description": "Điều kiện đổi trả két sắt Neko Safe khi nhận hàng lỗi hoặc không đúng mẫu.",
+    "h1": "Chính sách đổi trả",
+    "blocks": [
+      {
+        "h": "Trường hợp được đổi trả",
+        "items": [
+          "[Hàng lỗi do nhà sản xuất, giao sai mẫu, hư hỏng khi vận chuyển.]"
+        ]
+      },
+      {
+        "h": "Thời hạn",
+        "items": [
+          "Trong vòng [..] ngày kể từ khi nhận hàng."
+        ]
+      },
+      {
+        "h": "Điều kiện",
+        "items": [
+          "[Còn nguyên thùng, phụ kiện, chìa, sách hướng dẫn; chưa lắp đặt hoặc chưa cài mã cá nhân, nếu áp dụng.]"
+        ]
+      },
+      {
+        "h": "Chi phí",
+        "items": [
+          "[Ai chịu phí vận chuyển đổi trả trong từng trường hợp.]"
+        ]
+      }
+    ]
+  }
+}
